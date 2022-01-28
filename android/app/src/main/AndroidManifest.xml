@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tz.co.exploremaisha.app.dicover_maisha">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="dicover_maisha"
         android:name="${applicationName}"
