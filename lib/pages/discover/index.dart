@@ -16,10 +16,13 @@ class _IndexDiscoverState extends State<IndexDiscover> {
       body: SafeArea(
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [_profileRow(), _stories(), _trending(), _discover()],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [_profileRow(), _stories(), _trending(), _discover()],
+              ),
             ),
           )),
     );
@@ -341,7 +344,7 @@ class _IndexDiscoverState extends State<IndexDiscover> {
             clipBehavior: Clip.antiAliasWithSaveLayer,
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: Colors.grey.shade900.withOpacity(.5),
+              color: Colors.grey.shade900.withOpacity(.8),
             ),
           ),
         ),
