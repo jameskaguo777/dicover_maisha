@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       ),
 
       routes: {
-        '/': (context) => IndexDiscover(),
+        '/': (context) => const IndexDiscover(),
       },
     );
   }
