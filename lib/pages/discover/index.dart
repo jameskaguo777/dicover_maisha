@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class IndexDiscover extends StatefulWidget {
@@ -12,16 +14,14 @@ class _IndexDiscoverState extends State<IndexDiscover> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Container(
-        padding: const EdgeInsets.all(8.0),
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [_profileRow(), _stories(), _trending()],
-        ),
-      )),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [_profileRow(), _stories(), _trending(), _discover()],
+            ),
+          )),
     );
   }
 
@@ -98,7 +98,8 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                     .textTheme
                     .headline6
                     ?.copyWith(color: Colors.white)),
-            SizedBox(
+            Container(
+              padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0),
               width: double.infinity,
               height: 250,
               child: ListView.builder(
@@ -109,13 +110,13 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          width: 100,
-                          height: 200,
+                          width: 120,
+                          height: 180,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
                           margin: const EdgeInsets.fromLTRB(5.0, 8.0, 5.0, 8.0),
                           decoration: const BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(8.0)),
+                                  BorderRadius.all(Radius.circular(13.0)),
                               shape: BoxShape.rectangle,
                               color: Colors.black12),
                           child: Stack(
@@ -124,8 +125,8 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                                 top: 0,
                                 left: 0,
                                 child: Container(
-                                  width: 100,
-                                  height: 200,
+                                  width: 120,
+                                  height: 180,
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.rectangle,
                                     image: DecorationImage(
@@ -138,29 +139,54 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                               ),
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: Transform(
-                                  transform: Matrix4.identity()..scale(0.5),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Chip(
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.all(4.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              Colors.red[500]!,
+                                              Colors.red,
+                                            ],
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(7.0),
+                                        ),
+                                        child: Text(
+                                          'Live',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .caption
+                                              ?.copyWith(
+                                                  color: Colors.white,
+                                                  shadows: [
+                                                const Shadow(
+                                                    color: Colors.black,
+                                                    blurRadius: 2.0)
+                                              ]),
                                         ),
                                       ),
-                                      side: const BorderSide(
-                                          color: Colors.white,
-                                          width: 1.0,
-                                          style: BorderStyle.solid),
-                                      label: Text(
-                                        'Live',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1
-                                            ?.copyWith(color: Colors.white),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text('14.5K',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .caption
+                                                ?.copyWith(
+                                                    color: Colors.white,
+                                                    shadows: [
+                                                  const Shadow(
+                                                      color: Colors.black,
+                                                      blurRadius: 2.0)
+                                                ])),
                                       ),
-                                      backgroundColor: Colors.red,
-                                    ),
+                                    ],
                                   ),
                                 ),
                               )
@@ -195,23 +221,305 @@ class _IndexDiscoverState extends State<IndexDiscover> {
         ),
       );
 
-  Widget _trending() => Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-         Text('Trending', style: Theme.of(context).textTheme.headline6?.copyWith(color: Colors.white)),
-          Wrap(
-            children: const [
-              Text('More'),
-              Icon(Icons.arrow_forward_rounded)
-            ],
-          )
-        ],
-      )
-    ],
+  Widget _trending() => Padding(
+    padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+    child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () => print('tapped'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Trending',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          ?.copyWith(color: Colors.white)),
+                  Wrap(
+                    direction: Axis.horizontal,
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 5.0,
+                    children: [
+                      Text(
+                        'More',
+                        style: Theme.of(context)
+                            .textTheme
+                            .button
+                            ?.copyWith(color: Colors.amber),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_rounded,
+                        color: Colors.amber,
+                        size: 12,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 310,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  _nonActiveCard(),
+                  _activeCard(),
+                ],
+              ),
+            ),
+          ],
+        ),
   );
+
+      Widget _discover() => Padding(
+       padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () => print('tapped'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Discover',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline6
+                          ?.copyWith(color: Colors.white)),
+                  Wrap(
+                    direction: Axis.horizontal,
+                    alignment: WrapAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 5.0,
+                    children: [
+                      Text(
+                        'More',
+                        style: Theme.of(context)
+                            .textTheme
+                            .button
+                            ?.copyWith(color: Colors.amber),
+                      ),
+                      const Icon(
+                        Icons.arrow_forward_rounded,
+                        color: Colors.amber,
+                        size: 12,
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 310,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  _nonActiveCard(),
+                  _activeCard(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+
+  Widget _nonActiveCard() => Transform(
+        // origin: Offset.fromDirection(1.5, 1.5),
+        alignment: Alignment.centerRight,
+        transform: Matrix4.identity()..scale(0.8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18.0),
+          child: Container(
+            width: double.infinity,
+            height: 310,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Colors.grey.shade900.withOpacity(.5),
+            ),
+          ),
+        ),
+      );
+
+  Widget _activeCard() => Transform(
+        alignment: Alignment.center,
+        transform: Matrix4.identity()..scale(0.95),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(18.0),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(18.0, 18.0, 18.0, 0.0),
+            width: double.infinity,
+            height: 310,
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Colors.grey.shade900.withOpacity(.9),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 170,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          margin:
+                              const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
+                          width: double.infinity,
+                          height: 170,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                  'https://picsum.photos/400/200'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomRight,
+                          child: InkWell(
+                            onTap: () => print('tapped'),
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: PhysicalShape(
+                              elevation: 20,
+                              color: Colors.yellow.shade600,
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              clipper: const ShapeBorderClipper(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(20.0)))),
+                              child: Container(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      12.0, 12.0, 12.0, 12.0),
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    color: Colors.yellow.shade500,
+                                    borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(15.0),
+                                        bottomRight: Radius.circular(20.0)),
+                                  ),
+                                  child: Wrap(
+                                    direction: Axis.horizontal,
+                                    alignment: WrapAlignment.center,
+                                    crossAxisAlignment:
+                                        WrapCrossAlignment.center,
+                                    spacing: 5.0,
+                                    children: [
+                                      const Icon(
+                                        Icons.thumb_up_off_alt,
+                                        color: Colors.black,
+                                      ),
+                                      Text(
+                                        'Like',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            ?.copyWith(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    color: Colors.grey.shade800.withOpacity(.5),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    image: const DecorationImage(
+                                      image: NetworkImage(
+                                          'https://picsum.photos/50/50'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+
+                                Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Container(
+                                    width: 10,
+                                    height: 10,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.green,
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 1,
+                                    ),
+                                    
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              direction: Axis.vertical,
+                              alignment: WrapAlignment.spaceBetween,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 5.0,
+                              children: [
+                                Text('Anna Malaki', style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    ?.copyWith(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
+
+                                Text('@AnnaMalaki', style: Theme.of(context).textTheme.overline?.copyWith(
+                                    color: Colors.grey,
+                                    )),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+
+                      RichText(
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        text: const TextSpan(text: '👉 Travelm is a UI Kit for travel, tour, trip app, especially for travelers, travel agencies. This UI kit made with precision while maintaining modern design patterns and Apple’s Humen Interface Guidelines.')),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      );
 }
