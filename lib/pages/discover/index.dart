@@ -1,6 +1,8 @@
-import 'dart:ui';
+import 'dart:collection';
 
+import 'package:dicover_maisha/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class IndexDiscover extends StatefulWidget {
   const IndexDiscover({Key? key}) : super(key: key);
@@ -10,6 +12,17 @@ class IndexDiscover extends StatefulWidget {
 }
 
 class _IndexDiscoverState extends State<IndexDiscover> {
+
+  final _pageController = PageController(initialPage: 0);
+  int? _currentPageNotifier;
+
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -264,21 +277,56 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                 ],
               ),
             ),
+            // SizedBox(
+            //   height: 310,
+            //   child: Stack(
+            //     alignment: Alignment.center,
+            //     children: [
+            //       ...constPostItem.map((post) => _activeCard(post)),
+            //       // _nonActiveCard(),
+            //       // _activeCard(),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 310,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  _nonActiveCard(),
-                  _activeCard(),
-                ],
+              child: GestureDetector(
+                onTap: () => print('tapped'),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    ...constPostItem.map((post) => _activeCard(post)),
+                    // _nonActiveCard(),
+                    // _activeCard(),
+                  ],
+                ),
               ),
-            ),
+            )
+            // SizedBox(
+            //   height: 310,
+            //   child: PageView.custom(
+            //     onPageChanged: (value) => setState(() {
+            //       _currentPageNotifier = value;
+            //     }),
+            //     childrenDelegate: SliverChildBuilderDelegate(
+            //       (context, index) => _activeCard(constPostItem[index]),
+            //       childCount: constPostItem.length
+            //       ),
+            //       controller: PageController(viewportFraction: 1),
+            //       scrollDirection: Axis.horizontal),
+            //   ),
+            
+            // SizedBox(
+            //   height: 310,
+            //   child: PageView.builder(itemBuilder: (context, index) {
+            //     return _activeCard(constPostItem[index]);
+            //   }, itemCount: constPostItem.length, scrollDirection: Axis.horizontal,),
+            // )
           ],
         ),
   );
 
-      Widget _discover() => Padding(
+  Widget _discover() => Padding(
        padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -324,7 +372,7 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                 alignment: Alignment.center,
                 children: [
                   _nonActiveCard(),
-                  _activeCard(),
+                  // _activeCard(),
                 ],
               ),
             ),
@@ -350,7 +398,7 @@ class _IndexDiscoverState extends State<IndexDiscover> {
         ),
       );
 
-  Widget _activeCard() => Transform(
+  Widget _activeCard(Map<String, dynamic> post) => Transform(
         alignment: Alignment.center,
         transform: Matrix4.identity()..scale(0.95),
         child: ClipRRect(
@@ -381,11 +429,11 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                               const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                           width: double.infinity,
                           height: 170,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
                             image: DecorationImage(
                               image: NetworkImage(
-                                  'https://picsum.photos/400/200'),
+                                  post['post_img']),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -461,9 +509,9 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                                     shape: BoxShape.rectangle,
                                     color: Colors.grey.shade800.withOpacity(.5),
                                     borderRadius: BorderRadius.circular(10.0),
-                                    image: const DecorationImage(
+                                    image: DecorationImage(
                                       image: NetworkImage(
-                                          'https://picsum.photos/50/50'),
+                                          post['avatar']),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -497,14 +545,14 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                               crossAxisAlignment: WrapCrossAlignment.center,
                               spacing: 5.0,
                               children: [
-                                Text('Anna Malaki', style: Theme.of(context)
+                                Text(post['name'], style: Theme.of(context)
                                     .textTheme
                                     .bodyText1
                                     ?.copyWith(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold)),
 
-                                Text('@AnnaMalaki', style: Theme.of(context).textTheme.overline?.copyWith(
+                                Text(post['handle'], style: Theme.of(context).textTheme.overline?.copyWith(
                                     color: Colors.grey,
                                     )),
                               ],
@@ -516,7 +564,7 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                       RichText(
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        text: const TextSpan(text: '👉 Travelm is a UI Kit for travel, tour, trip app, especially for travelers, travel agencies. This UI kit made with precision while maintaining modern design patterns and Apple’s Humen Interface Guidelines.')),
+                        text: TextSpan(text: post['caption'],)),
                     ],
                   ),
                 )
