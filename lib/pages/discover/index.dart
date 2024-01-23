@@ -162,7 +162,7 @@ class _IndexDiscoverState extends State<IndexDiscover> {
                                       Container(
                                         padding: const EdgeInsets.all(4.0),
                                         decoration: BoxDecoration(
-                                          color: Colors.red,
+                                          
                                           gradient: LinearGradient(
                                             begin: Alignment.topLeft,
                                             end: Alignment.bottomRight,
